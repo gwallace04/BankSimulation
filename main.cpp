@@ -3,23 +3,23 @@
 //
 
 #include <cstdlib>
+#include <fstream>
 #include <iostream>
 #include <queue>
-#include <tuple>
-#include <fstream>
 #include <string>
+#include <tuple>
 
 typedef std::tuple<int, int, char> event;
 
-using std::priority_queue;
-using std::queue;
-using std::vector;
-using std::greater;
-using std::get;
-using std::make_tuple;
 using std::cout;
 using std::endl;
+using std::get;
+using std::greater;
+using std::make_tuple;
+using std::priority_queue;
+using std::queue;
 using std::string;
+using std::vector;
 
 void simulate(const string &);
 
@@ -40,7 +40,7 @@ void simulate(const string & fileName) {
     string line;
     std::ifstream myFile (fileName);
     while(getline(myFile, line)) {
-        int comma = line.find_first_of(",");
+        unsigned long comma = line.find_first_of(',');
         string time = line.substr(0, comma);
         string leng = line.substr(comma + 1);
         event newArrivalEvent = make_tuple(std::stoi(time), std::stoi(leng), 'A');
@@ -87,9 +87,11 @@ void simulate(const string & fileName) {
         }
     }
 
-    //Final Stats
-    double average = static_cast<double>(totalWaitTime) / customersProcessed;
+    //Simulation ends
     cout << "Simulation Ends\n" << endl;
+
+    //Final stats
+    double average = static_cast<double>(totalWaitTime) / customersProcessed;
     cout << "Final Statistics:" << endl;
     cout << "\t Total number of people processed: " <<  customersProcessed << endl;
     cout << "\t Average amount of time spent waiting: " << average << endl;
